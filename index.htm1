@@ -1,0 +1,225 @@
+# lovee
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>給你的一個小驚喜</title>
+<style>
+    * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; text-align: center; overflow: hidden; padding: 20px; transition: background 0.8s ease; }
+  body.login-bg { background: linear-gradient(135deg, #AEDFF5, #D6F0FF, #EAF7FF); }
+  body.pink-bg { background: linear-gradient(135deg, #FFC7DD, #FFD6E7, #FFEAF2); }
+  .deco { position: fixed; z-index: 1; pointer-events: none; opacity: 0.55; font-size: 20px; }
+  .deco.blue { color: #7CCBF2; } .deco.pink { color: #FF9EC7; } .deco.white { color: #fff; opacity: 0.9; }
+  #deco-blue, #deco-pink { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+  #deco-pink { display: none; }
+
+  /* 花花裝飾，只在第4頁 */
+  #flower-deco { position: fixed; inset: 0; pointer-events: none; z-index: 2; display: none; }
+  .flower { position: absolute; font-size: 58px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12)); line-height: 1; }
+  .flower small { display: block; font-size: 28px; margin-top: -6px; }
+
+  .card { background: rgba(255,255,255,0.95); padding: 32px 28px; border-radius: 28px; width: 100%; max-width: 380px; position: relative; z-index: 10; max-height: 92vh; overflow-y: auto; }
+  .page { display: none; } .page.active { display: block; }
+  h1 { font-size: 24px; margin: 10px 0; }
+  p { color: #888; font-size: 14px; line-height: 1.6; }
+  input { width: 100%; padding: 13px; border-radius: 14px; border: 1.5px solid #AEDFF5; font-size: 18px; text-align: center; outline: none; margin-top: 15px; }
+  button { width: 100%; margin-top: 15px; padding: 13px; border: none; border-radius: 14px; color: white; font-size: 16px; cursor: pointer; }
+  .btn-blue { background: linear-gradient(135deg, #7CCBF2, #5AB0E6); }
+  .btn-pink { background: linear-gradient(135deg, #ff6b9d, #ff4d8d); }
+  .error { color: #ff4d6d; font-size: 14px; margin-top: 10px; display: none; }
+  .photo { width: 140px; height: 140px; object-fit: cover; border-radius: 50%; border: 5px solid #ffd6e7; margin: 5px auto 10px; display: block; }
+  .days { font-size: 62px; font-weight: bold; color: #ff4d8d; margin: 12px 0; line-height: 1.1; }
+  .heart { font-size: 42px; animation: beat 1s infinite; display: inline-block; }
+  @keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+  #hearts-bg { position: fixed; inset: 0; overflow: hidden; z-index: 2; pointer-events: none; display: none; }
+  .falling-heart { position: absolute; top: -40px; animation: fall linear forwards; }
+  @keyframes fall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3; } }
+  .love-msg { background: #fff0f5; padding: 12px; border-radius: 14px; color: #ff4d8d; font-size: 15px; margin-top: 12px; }
+  .next-btn { position: absolute; right: 18px; bottom: 18px; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #ff6b9d, #ff4d8d); color: white; font-size: 26px; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 6px 15px rgba(255,77,141,0.35); border: none; padding: 0; margin: 0; }
+  .relative-card { position: relative; padding-bottom: 68px; }
+  .question-title { font-size: 22px; font-weight: bold; color: #2A6BA0; margin: 18px 0; }
+  .btn-row { display: flex; gap: 12px; justify-content: center; align-items: center; }
+  .btn-row button { flex: 1; margin-top: 0; }
+  #yesBtn { background: linear-gradient(135deg, #ff6b9d, #ff4d8d); font-size: 20px; font-weight: bold; transition: transform 0.3s ease; }
+  #noBtn { background: #c9c9c9; transition: all 0.3s ease; }
+  #noBtn.become-yes { background: linear-gradient(135deg, #ff6b9d, #ff4d8d) !important; }
+  .iloveyou { font-size: 52px; font-weight: bold; color: #ff4d8d; line-height: 1.2; margin: 20px 0; }
+  .iloveyou span { display: block; }
+</style>
+</head>
+<body class="login-bg">
+
+<div id="deco-blue">
+  <span class="deco blue" style="top:8%; left:6%; font-size:28px;">♥</span>
+  <span class="deco white" style="top:12%; left:14%; font-size:18px;">♥</span>
+  <span class="deco blue" style="top:18%; left:4%;">♥</span>
+  <span class="deco white" style="top:10%; right:8%; font-size:16px;">♥</span>
+  <span class="deco blue" style="bottom:10%; left:6%; font-size:26px;">♥</span>
+  <span class="deco white" style="bottom:14%; left:15%;">♥</span>
+  <span class="deco blue" style="bottom:8%; right:7%; font-size:18px;">♥</span>
+</div>
+<div id="deco-pink">
+  <span class="deco pink" style="top:8%; right:6%; font-size:28px;">♥</span>
+  <span class="deco white" style="top:12%; right:14%; font-size:18px;">♥</span>
+  <span class="deco pink" style="top:18%; right:4%;">♥</span>
+  <span class="deco white" style="top:10%; left:8%; font-size:16px;">♥</span>
+  <span class="deco pink" style="bottom:10%; right:6%; font-size:26px;">♥</span>
+  <span class="deco white" style="bottom:14%; right:15%;">♥</span>
+  <span class="deco pink" style="bottom:8%; left:7%; font-size:18px;">♥</span>
+</div>
+
+<!-- 第4頁 花花 -->
+<div id="flower-deco">
+  <div class="flower" style="top:5%; left:3%;">🌹<small>🌸🌿</small></div>
+  <div class="flower" style="top:5%; right:3%;">🌹<small>🌷🌿</small></div>
+  <div class="flower" style="bottom:5%; left:3%;">🌷<small>🌸🌿</small></div>
+  <div class="flower" style="bottom:5%; right:3%;">🌹<small>🌸🌿</small></div>
+  <div class="flower" style="top:42%; left:1%; font-size:34px;">🌸</div>
+  <div class="flower" style="top:42%; right:1%; font-size:34px;">🌸</div>
+</div>
+
+<div id="hearts-bg"></div>
+
+<div class="card page active" id="page1">
+  <div style="font-size:42px;">🔒</div>
+  <h1>輸入我們的專屬密碼</h1>
+  <p>只有你知道的喔</p>
+  <input type="password" id="passwordInput" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter') checkPassword()">
+  <button class="btn-blue" onclick="checkPassword()">進入 💙</button>
+  <div class="error" id="errorMsg">密碼不對喔，再想想看 💭</div>
+</div>
+
+<div class="card page relative-card" id="page2">
+  <div class="heart">💗</div>
+  <h1>我們在一起</h1>
+  <img class="photo" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop" alt="我們">
+  <p id="fromText" style="font-size:16px; color:#555; margin:0;"></p>
+  <div class="days"><span id="dayCount">0</span> 天啦～💗</div>
+  <div class="love-msg" id="loveMsg"></div>
+  <p style="margin-top:12px;">每一天都因為有你，變得更可愛了</p>
+  <button class="next-btn" onclick="goToPage(3)">→</button>
+</div>
+
+<div class="card page" id="page3">
+  <div style="font-size:50px;">💙</div>
+  <div class="question-title">我們會一直在一起嗎><</div>
+  <div class="btn-row">
+    <button id="yesBtn" onclick="goToPage(4)">Yes 💗</button>
+    <button id="noBtn" onclick="sayNo()">No</button>
+  </div>
+  <p id="noHint" style="margin-top:12px; min-height:20px;"></p>
+  <button onclick="goToPage(2)" style="background:#AEDFF5; color:#2A6BA0;">← 回到上一頁</button>
+</div>
+
+<div class="card page" id="page4">
+  <div style="font-size:46px;">🌹</div>
+  <div class="iloveyou"><span>I Love</span><span>you💗</span></div>
+  <p style="font-size:16px; color:#ff4d8d;">我們會一直在一起的，對吧？</p>
+  <p>送你一束花，葉薪喵幫我們作證了 💗</p>
+  <div style="font-size:32px; margin-top:10px;">🌹🌷💗🌷🌹</div>
+  <p style="font-size:12px; color:#ffb6cd;">for you • always</p>
+  <button class="btn-pink" onclick="goToPage(1); resetAll()">回到最前面</button>
+</div>
+
+<script>
+  const PASSWORDS = {
+    "1112": { month: 11, day: 12, label: "11月12日", msg: "從那天開始，我的世界就變成粉紅色的了 💗" },
+    "0824": { month: 8, day: 24, label: "8月24日", msg: "那一天，是我們故事開始的地方 ✨" }
+  };
+  let heartsStarted = false;
+  let noCount = 0;
+  function showPage(n) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("page" + n).classList.add("active");
+    document.getElementById("flower-deco").style.display = (n === 4 ? "block" : "none");
+    const isBlue = (n === 1 || n === 3);
+    if (isBlue) {
+      document.body.classList.remove("pink-bg");
+      document.body.classList.add("login-bg");
+      document.getElementById("deco-blue").style.display = "block";
+      document.getElementById("deco-pink").style.display = "none";
+      document.getElementById("hearts-bg").style.display = "none";
+    } else {
+      document.body.classList.remove("login-bg");
+      document.body.classList.add("pink-bg");
+      document.getElementById("deco-blue").style.display = "none";
+      document.getElementById("deco-pink").style.display = "block";
+      if (heartsStarted) document.getElementById("hearts-bg").style.display = "block";
+    }
+  }
+  function goToPage(n) { showPage(n); }
+  function checkPassword() {
+    const input = document.getElementById("passwordInput").value.trim();
+    const info = PASSWORDS[input];
+    if (info) {
+      calcDays(info);
+      document.getElementById("loveMsg").textContent = info.msg;
+      showPage(2);
+      startHearts();
+    } else {
+      document.getElementById("errorMsg").style.display = "block";
+    }
+  }
+  function calcDays(info) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    let start = new Date(today.getFullYear(), info.month - 1, info.day);
+    if (start > today) start = new Date(today.getFullYear() - 1, info.month - 1, info.day);
+    const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
+    document.getElementById("dayCount").textContent = diff;
+    document.getElementById("fromText").textContent = `（從${info.label}到今天）`;
+  }
+  function sayNo() {
+    const noBtn = document.getElementById("noBtn");
+    if (noCount >= 3) { goToPage(4); return; }
+    noCount++;
+    const yesBtn = document.getElementById("yesBtn");
+    const scale = Math.pow(2, noCount);
+    yesBtn.style.transform = `scale(${scale})`;
+    const hints = ["你確定嗎？🥺", "再想一下啦～", "不行喔，只能選 Yes！"];
+    document.getElementById("noHint").textContent = hints[noCount - 1] || "";
+    if (noCount === 1) noBtn.textContent = "No 🥺";
+    if (noCount === 2) noBtn.textContent = "真的不要？";
+    if (noCount >= 3) {
+      noBtn.textContent = "Yes 💗";
+      noBtn.classList.add("become-yes");
+      document.getElementById("noHint").textContent = "看吧，No 已經變成 Yes 了，只能選 Yes 了 💗";
+      yesBtn.style.transform = "scale(1)";
+    }
+  }
+  function resetAll() {
+    noCount = 0;
+    document.getElementById("yesBtn").style.transform = "scale(1)";
+    const noBtn = document.getElementById("noBtn");
+    noBtn.textContent = "No";
+    noBtn.classList.remove("become-yes");
+    document.getElementById("noHint").textContent = "";
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("errorMsg").style.display = "none";
+    document.getElementById("hearts-bg").style.display = "none";
+    document.getElementById("hearts-bg").innerHTML = "";
+    heartsStarted = false;
+  }
+  const emojis = ["💗","💖","💕","❤️","💓","✨"];
+  function createHeart() {
+    const c = document.getElementById("hearts-bg");
+    const h = document.createElement("div");
+    h.className = "falling-heart";
+    h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (14 + Math.random() * 22) + "px";
+    h.style.animationDuration = (3 + Math.random() * 4) + "s";
+    c.appendChild(h);
+    setTimeout(() => h.remove(), 7000);
+  }
+  function startHearts() {
+    if (heartsStarted) return;
+    heartsStarted = true;
+    document.getElementById("hearts-bg").style.display = "block";
+    for (let i = 0; i < 15; i++) setTimeout(createHeart, i * 200);
+    setInterval(() => { if (heartsStarted) createHeart(); }, 350);
+  }
+</script>
+</body>
+</html>
