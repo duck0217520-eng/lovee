@@ -84,4 +84,39 @@ function checkPw(){
     document.getElementById('page2').classList.remove('hidden');
     document.body.className='pink';
   } else {
-    document.getElementById('err').innerText='密碼不對喔，再想想 💭
+    document.getElementById('err').innerText='密碼不對喔，再想想 💭';
+  }
+}
+let start=new Date('2026-11-12');
+let now=new Date();
+let diff=Math.floor((now-start)/(1000*60*60*24))+1;
+document.getElementById('days').innerText=diff+' 天啦';
+function go3(){
+  document.getElementById('page2').classList.add('hidden');
+  document.getElementById('page3').classList.remove('hidden');
+  document.body.className='blue';
+}
+function back2(){
+  document.getElementById('page3').classList.add('hidden');
+  document.getElementById('page2').classList.remove('hidden');
+  document.body.className='pink';
+}
+let noCount=0;
+function noClick(){
+  noCount++;
+  let yes=document.getElementById('yesBtn');
+  let size=20+noCount*10;
+  yes.style.fontSize=size+'px';
+  yes.style.padding=(14+noCount*4)+'px';
+  if(noCount>=3){
+    go4();
+  }
+}
+function go4(){
+  document.getElementById('page3').classList.add('hidden');
+  document.getElementById('page4').classList.remove('hidden');
+  document.body.className='pink';
+}
+</script>
+</body>
+</html>
