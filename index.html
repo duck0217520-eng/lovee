@@ -37,7 +37,6 @@ input{width:100%;padding:14px;border:2px solid #AEDFF5;border-radius:14px;font-s
 <body class="blue">
 <div class="hearts"><span>💙🤍💙🤍💙</span><span>💙🤍💙🤍💙</span></div>
 
-<!-- 第1頁 -->
 <div class="card" id="page1">
 <div class="icon">🔒</div>
 <h1>輸入我們的專屬密碼</h1>
@@ -47,7 +46,6 @@ input{width:100%;padding:14px;border:2px solid #AEDFF5;border-radius:14px;font-s
 <p id="err" style="color:#FF2E7A;margin-top:8px"></p>
 </div>
 
-<!-- 第2頁 -->
 <div class="card pink hidden" id="page2">
 <div class="icon">💗</div>
 <h1>我們在一起</h1>
@@ -58,7 +56,6 @@ input{width:100%;padding:14px;border:2px solid #AEDFF5;border-radius:14px;font-s
 <button class="next" onclick="go3()">→</button>
 </div>
 
-<!-- 第3頁 -->
 <div class="card hidden" id="page3">
 <div class="icon">💙</div>
 <h1>我們會一直在一起嗎&gt;&lt;</h1>
@@ -69,7 +66,6 @@ input{width:100%;padding:14px;border:2px solid #AEDFF5;border-radius:14px;font-s
 <button class="back" onclick="back2()">← Back</button>
 </div>
 
-<!-- 第4頁 -->
 <div class="card pink hidden" id="page4">
 <span class="flowers" style="top:8px;left:12px">🌸🌷</span>
 <span class="flowers" style="top:8px;right:12px">🌷🌸</span>
@@ -88,40 +84,4 @@ function checkPw(){
     document.getElementById('page2').classList.remove('hidden');
     document.body.className='pink';
   } else {
-    document.getElementById('err').innerText='密碼不對喔，再想想 💭';
-  }
-}
-let start=new Date('2025-11-12');
-let now=new Date();
-let diff=Math.floor((now-start)/(1000*60*60*24));
-if(diff<1) diff=1;
-document.getElementById('days').innerText=diff+' 天啦';
-function go3(){
-  document.getElementById('page2').classList.add('hidden');
-  document.getElementById('page3').classList.remove('hidden');
-  document.body.className='blue';
-}
-function back2(){
-  document.getElementById('page3').classList.add('hidden');
-  document.getElementById('page2').classList.remove('hidden');
-  document.body.className='pink';
-}
-let noCount=0;
-function noClick(){
-  noCount++;
-  let yes=document.getElementById('yesBtn');
-  let size=20+noCount*10;
-  yes.style.fontSize=size+'px';
-  yes.style.padding=(14+noCount*4)+'px';
-  if(noCount>=3){
-    go4();
-  }
-}
-function go4(){
-  document.getElementById('page3').classList.add('hidden');
-  document.getElementById('page4').classList.remove('hidden');
-  document.body.className='pink';
-}
-</script>
-</body>
-</html>
+    document.getElementById('err').innerText='密碼不對喔，再想想 💭
